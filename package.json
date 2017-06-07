@@ -1,0 +1,25 @@
+{
+  "name": "map-object-facade",
+  "version": "1.0.0",
+  "description": "Use map as object (e.g. map.a instead of map.get('a'))",
+  "scripts": {
+    "test": "node test.js"
+  },
+  "keywords": [
+    "javascript",
+    "map",
+    "object",
+    "facade",
+    "interface"
+  ],
+  "author": "Nicolas de Jong <nicolas@rutilo.nl>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nicolasdejong/map-object-facade.git"
+  },
+  "devDependencies": {
+    "jasmine": "^2.5.2"
+  },
+  "dependencies": {}
+}
