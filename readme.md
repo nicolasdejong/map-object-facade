@@ -7,15 +7,15 @@
 - Get and set values using the object dot notation.
 - Supports Object calls like Object.keys(map) and delete map[key].
 - Supports readonly (sealed) mode and noAdditions (frozen) mode.
-- Adds a single function on the Map prototype (objectFacade).
+- Provides a single function for maps (mapAsObject).
 - Transparent: existing Map functionality is not changed.
 
 ## Usage examples
 
 ```javascript
-import 'map-object-facade'
+import mapAsObject from 'map-object-facade'
 
-let map = new Map().objectFacade();
+let map = mapAsObject(new Map());
 map.a = 1;
 map['b'] = 2;
 map.set('c', 3);
@@ -29,13 +29,13 @@ map.size === 2
 map.b === map.get('b') === undefined
 Object.keys(map) === map.keys() === ['a', 'c']
 
-let readMap = map.objectFacade({readonly:true});
+let readMap = mapAsObject(map, {readonly:true});
 ```
 
 ## Readonly or noAdditions
 
 Object.seal and Object.freeze cannot be set independently on a proxy (which is used in the implementation of objectFacade).
-Instead, options can be given in the objectFacade call.
+Instead, options can be given in the mapAsObject(..) call.
 
 Current supported options are:
 
@@ -46,9 +46,9 @@ Current supported options are:
 
 For example:
 
-   ```map.objectFacade({noAdditions:true, throwOnIgnoredSet:true})```
+   ```mapAsObject(map, {noAdditions:true, throwOnIgnoredSet:true})```
 
-'seal' and 'freeze' are used as alias because they are known names (which are not very descriptive).
+'seal' and 'freeze' are used as alias because they are known names (though not very descriptive).
 
 
 ## [Changelog](https://github.com/nicolasdejong/map-object-facade/blob/master/CHANGELOG.txt)

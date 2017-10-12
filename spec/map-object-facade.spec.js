@@ -1,9 +1,9 @@
 'use strict'
-require('../src/map-object-facade');
+var mapAsObject = require('../src/map-object-facade');
 
 describe('map-object-facade', () => {
   const testMap = options => {
-    const map = new Map().objectFacade(options);
+    const map = mapAsObject(new Map(), options);
     map.a = 1;
     map.b = 2;
     map['c'] = 3;
@@ -13,7 +13,7 @@ describe('map-object-facade', () => {
   it('transparent', () => {
     const map = new Map();
     map.set('a', 11);
-    const fmap = map.objectFacade();
+    const fmap = mapAsObject(map);
     expect(fmap.a).toEqual(11);
     fmap.a = 12;
     expect(fmap.a).toEqual(12);
@@ -22,7 +22,7 @@ describe('map-object-facade', () => {
     expect(fmap.a).toEqual(13);
   });
   it('allows normal map behaviour', () => {
-    const map = new Map().objectFacade();
+    const map = mapAsObject(new Map());
     expect(map.size).toEqual(0);
     map.set('a', 123);
     expect(map.size).toEqual(1);
@@ -31,12 +31,12 @@ describe('map-object-facade', () => {
   });
   it('iterate', () => {
     const map = testMap();
-    const map2 = new Map(/*iterable*/map).objectFacade();
+    const map2 = mapAsObject(new Map(/*iterable*/map));
     expect(map.a).toEqual(map2.a);
     expect(map.size).toEqual(map2.size);
   });
   it('get/set as in object', () => {
-    const map = new Map().objectFacade();
+    const map = mapAsObject(new Map());
     map.a = 123;
     expect(map.size).toEqual(1);
     expect(map.has('a')).toEqual(true);
@@ -73,26 +73,26 @@ describe('map-object-facade', () => {
   });
   it('options.noAdditions', () => {
     const map = testMap();
-    const map2 = map.objectFacade({noAdditions:true});
+    const map2 = mapAsObject(map, {noAdditions:true});
     map.d = 4;
     expect(map.size).toEqual(4);
     map2.d = 44;
     expect(map.d).toEqual(44);
     map2.e = 5;
     expect(map.size).toEqual(4);
-    const map3 = map.objectFacade({noAdditions:true, throwOnIgnoredSet:true});
+    const map3 = mapAsObject(map, {noAdditions:true, throwOnIgnoredSet:true});
     expect(() => map3.e = 5).toThrow();
   });
   it('options.readonly', () => {
     const map = testMap();
-    const map2 = map.objectFacade({readonly:true});
+    const map2 = mapAsObject(map, {readonly:true});
     map.d = 4;
     expect(map.size).toEqual(4);
     map2.d = 44;
     expect(map.d).toEqual(4);
     map2.e = 5;
     expect(map.size).toEqual(4);
-    const map3 = map.objectFacade({readonly:true, throwOnIgnoredSet:true});
+    const map3 = mapAsObject(map, {readonly:true, throwOnIgnoredSet:true});
     expect(() => map3.d = 5).toThrow();
     expect(() => delete map3.d).toThrow();
     expect(() => map3.set('d', 5)).toThrow();
