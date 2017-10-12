@@ -1,2 +1,5 @@
+2.0.0 -- 12 October 2017
+- Changed to a function to import (mapAsObject()) instead of adding an objectFacade() function on the Map prototype.
+
 1.0.0 -- 7 June 2017
 - Initial version

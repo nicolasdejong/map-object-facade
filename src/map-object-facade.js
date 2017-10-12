@@ -9,10 +9,9 @@
  * - throwIgnoredSet will throw if set is not allowed due to noAdditions / readonly
  *   (default: false -- meaning sets will be silently ignored if not allowed).
  */
-Map.prototype.objectFacade =
-WeakMap.prototype.objectFacade = function(options) {
-  const target = this;
-  const prototype = Object.getPrototypeOf(this);
+module.exports = function mapAsObject(map, options) {
+  const target = map;
+  const prototype = Object.getPrototypeOf(map);
   options || (options = {});
   const noAdditions = options.noAdditions || options.seal;
   const readonly    = options.readonly || options.freeze;
